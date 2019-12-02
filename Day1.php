@@ -120,6 +120,6 @@ foreach($mass_inputs as &$mass){
     // $sum_of_fuel = $sum_of_fuel+ floor($mass/3)-2; 
     // Part Two
     $fuel = floor($mass/3)-2;
-    $sum_of_fuel = $sum_of_fuel+ $fuel + recurse_fuel($fuel,$fuel);
+    $sum_of_fuel = $sum_of_fuel + recurse_fuel($fuel,$fuel);
 }
 echo($sum_of_fuel);

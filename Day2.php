@@ -4,7 +4,9 @@ $index = 0;
 while($opcodes_values[$index]!=99){
     if($opcodes_values[$index]==1){
         $opcodes_values[$opcodes_values[$index+3]] = $opcodes_values[$opcodes_values[$index+1]]+$opcodes_values[$opcodes_values[$index+2]];
-    }elseif($opcodes_values[$index]==2){
+    }
+    elseif($opcodes_values[$index]==2)
+    {
         $opcodes_values[$opcodes_values[$index+3]]=$opcodes_values[$opcodes_values[$index+1]]*$opcodes_values[$opcodes_values[$index+2]];
     }
     $index = $index+4;

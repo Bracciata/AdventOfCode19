@@ -12,7 +12,6 @@ function recurse_fuel($fuel, $sum){
 }
 
 
-
 // Part one
 $sum_of_fuel = 0;
 $mass_inputs = array(141923,

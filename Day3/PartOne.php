@@ -11,6 +11,7 @@ $coords2 = iterateMoves($input2);
 $coords2 = implode_array($coords2);
 $overlaps = find_overlapping_cords($coords1,$coords2);
 $overlaps = explode_array($overlaps);
+echo(sizeof($overlaps));
 $smallest_manhattan =  find_smallest_manhattan($overlaps);
 echo($smallest_manhattan);
 

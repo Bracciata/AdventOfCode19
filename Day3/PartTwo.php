@@ -44,15 +44,10 @@ function check_in_coords_mode($coords1,$coords2){
     $coords = array();
     for ($i=0;$i<sizeof($coords1);$i++) {
         for ($j=$i+1;$j<sizeof($coords2);$j++) {
-            if(substr($coords1[$i], 0, strpos($coords1[$i], ","))==substr($coords2[$j], 0, strpos($coords2[$j], ","))){
-                $steps = substr($coords1[$i], 1+strpos($coords1[$i], ","))+substr($coords2[$j], 1+strpos($coords2[$j], ","));
-                echo('Steps:'.$steps.'end');
-                $x = substr($coords1[$i],0,strpos(",",substr($coords1[$i], 0, strpos($coords1[$i], ","))));
-                echo('x:'.$x);
-                $y = substr($coords1[$i], strpos(",",substr($coords1[$i],0, 1+strpos($coords1[$i], ","))),strpos($coords1[$i], ","));
-                echo('y:'.$y.'end');
-
-                array_push($coords,[$x,$y,$steps]);
+            if(substr($coords1[$i], 0, strrpos($coords1[$i], ","))==substr($coords2[$j], 0, strrpos($coords2[$j], ","))){
+                $coordone = explode(',',$coords1[$i]);
+                $coord_two = explode(',',$coords2[$j]);
+                array_push($coords,[$coordone[0],$coordone[1],$coordone[2]+$coord_two[2]]);
 
             }
         }
@@ -72,7 +67,6 @@ function iterateMoves($input)
     foreach ($input as $move) {
         list($current_position, $coordinates, $steps) = send_move_input($current_position, $move,$steps);
         $current_position = $current_position;
-        $steps = $steps;
         $coords = array_merge($coords, $coordinates);
     }
     return $coords;
@@ -91,15 +85,14 @@ function move($letter,$number_of_moves,$current_position,$steps){
                 $current_position = [$current_position[0]+1,$current_position[1],$steps];
                 array_push($postions, $current_position);
             }
-            return array($current_position, $postions);
+            return array($current_position, $postions, $steps);
         case 'L':
             for ($i = 0; $i < $number_of_moves; $i++) {
                 $steps= $steps+1;
-
                 $current_position = [$current_position[0]-1,$current_position[1],$steps];
                 array_push($postions, $current_position);
             }
-            return array($current_position, $postions);
+            return array($current_position, $postions, $steps);
         case 'U':
             for ($i = 0; $i < $number_of_moves; $i++) {            
                     $steps= $steps+1;
@@ -107,13 +100,13 @@ function move($letter,$number_of_moves,$current_position,$steps){
                 $current_position = [$current_position[0],$current_position[1]+1,$steps];
                 array_push($postions, $current_position);
             }
-            return array($current_position, $postions);
+            return array($current_position, $postions, $steps);
         case 'D':
             for ($i = 0; $i < $number_of_moves; $i++) {
                 $steps= $steps+1;
                 $current_position = [$current_position[0],$current_position[1]-1,$steps];
                 array_push($postions, $current_position);
             }
-            return array($current_position, $postions,$steps);
+            return array($current_position, $postions, $steps);
     }
 }

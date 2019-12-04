@@ -6,10 +6,28 @@ $input1 = explode(",", $input1);
 $input2 = file_get_contents("Input2.txt");
 $input2 = explode(",", $input2);
 $coords1 = iterateMoves($input1);
+$coords1 = implode_array($coords1);
 $coords2 = iterateMoves($input2);
+$coords2 = implode_array($coords2);
 $overlaps = find_overlapping_cords($coords1,$coords2);
-$smallest_manhattan =  find_smallest_manhattan($overlap);
+$overlaps = explode_array($overlaps);
+$smallest_manhattan =  find_smallest_manhattan($overlaps);
 echo($smallest_manhattan);
+
+function implode_array($array){
+    $arrayOut = array();
+    foreach($array as $coord){
+        array_push($arrayOut, implode(',',$coord));
+    }
+    return $arrayOut;
+}
+function explode_array($array){
+    $arrayOut = array();
+    foreach($array as $coords){
+        array_push($arrayOut, explode(',',$coords));
+    }
+    return $arrayOut;
+}
 
 
 function find_smallest_manhattan($overlaps)
@@ -24,15 +42,8 @@ function find_smallest_manhattan($overlaps)
 
 
 function find_overlapping_cords($coords_list_one,$coords_list_two){
-    $overlap_positions = array();
-    foreach($coords_list_one as $coords_one){
-        foreach($coords_list_two as $coords_two){
-            if($coords_one[0]==$coords_two[0]&&$coords_one[1]==$coords_two[1]){
-                array_push($overlap_positions, $coords_one);
-            }
-        }
-    }
-    return $overlap_positions;
+   
+    return array_intersect($coords_list_one,$coords_list_two);
 }
 
 function iterateMoves($input)
@@ -52,11 +63,11 @@ function send_move_input($current_position,$move){
     return move($dir,$number_of_moves,$current_position);
 }
 function move($letter,$number_of_moves,$current_position){
-    $postions = array($current_position);
+    $postions = array();
     switch($letter){
         case 'R':
             for ($i = 0; $i < $number_of_moves; $i++) {
-                $current_position = [$current_position[0],$current_position[1]+1];
+                $current_position = [$current_position[0]+1,$current_position[1]];
                 array_push($postions, $current_position);
             }
             return array($current_position, $postions);
@@ -68,13 +79,13 @@ function move($letter,$number_of_moves,$current_position){
             return array($current_position, $postions);
         case 'U':
             for ($i = 0; $i < $number_of_moves; $i++) {
-                $current_position = [$current_position[0]+1,$current_position[1]];
+                $current_position = [$current_position[0],$current_position[1]+1];
                 array_push($postions, $current_position);
             }
             return array($current_position, $postions);
         case 'D':
             for ($i = 0; $i < $number_of_moves; $i++) {
-                $current_position = [$current_position[0]-1,$current_position[1]];
+                $current_position = [$current_position[0],$current_position[1]-1];
                 array_push($postions, $current_position);
             }
             return array($current_position, $postions);

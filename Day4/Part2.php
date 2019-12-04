@@ -7,6 +7,7 @@ for($i=$input1;$i<=$input2;$i++){
         array_push($valid_answers,$i);
     }
 }
+
 echo sizeof($valid_answers);
 # 670
 
